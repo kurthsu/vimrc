@@ -1,19 +1,19 @@
-vgod's vimrc
+kurt's vimrc
 ============
-Author: Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
+Author: Kurt Hsu (kurt.hsu@gmail.com)
 
-Fork me on GITHUB  https://github.com/vgod/vimrc.
+Forked from vgod's vimrc https://github.com/vgod/vimrc.
 
 ONE-STEP INSTALL
 ----------------
 
 Use curl (for Mac OS X):
 
-     curl -o - https://raw.githubusercontent.com/vgod/vimrc/master/auto-install.sh | sh
+     curl -o - https://raw.githubusercontent.com/kurthsu/vimrc/master/auto-install.sh | sh
 
 or wget (for most UNIX platforms):
 
-     wget -O - https://raw.githubusercontent.com/vgod/vimrc/master/auto-install.sh | sh
+     wget -O - https://raw.githubusercontent.com/kurthsu/vimrc/master/auto-install.sh | sh
 
 
 MANUALLY INSTALL
@@ -21,7 +21,7 @@ MANUALLY INSTALL
 
 1. Check out from github
 
-        git clone git://github.com/vgod/vimrc.git ~/.vim
+        git clone git://github.com/kurthsu/vimrc.git ~/.vim
         cd ~/.vim
         git submodule update --init
 
@@ -42,7 +42,7 @@ MANUALLY INSTALL ON WINDOWS
 
         cd C:\Program Files\Vim   (or your installed path to Vim)
         rmdir /s vimfiles         (This deletes your old vim configurations. If you want to keep it, use move instead of rmdir.)
-        git clone git://github.com/vgod/vimrc.git vimfiles
+        git clone git://github.com/kurthsu/vimrc.git vimfiles
         git submodule update --init
 
 2. Install vimrc. Add the following line at the end of C:\Program Files\Vim\vimrc.
@@ -64,11 +64,14 @@ To install a new plugin as a git submoudle, type the following commands.
 
      cd ~/.vim
      git submodule add [GIT-REPOSITORY-URL] bundle/[PLUGIN-NAME]
+     
+     // or update all bundles
+     git submodule foreach git pull origin master
 
-HOW TO USE
+USEFUL SHORTCUTS
 ----------
 
-see the "USEFUL SHORTCUTS" section in vimrc to learn my shortcuts.
+
 
 PLUGINS
 -------
@@ -143,37 +146,6 @@ PLUGINS
   `:Ack [options] {pattern} [{directory}]`
 
 * [Git Gutter](https://github.com/airblade/vim-gitgutter): shows a git diff in the 'gutter' (sign column). It shows whether each line has been added, modified, and where lines have been removed.
-
-Language specific supports
---------------------------
-
-* Latex: Read `:help latex-suite.txt`
-* Restructured Text: `ctrl-u 1~5` inserts Part/Chapter/Section headers
-* HTML, Javascript, CoffeeScript, Python, CSS, C, C++, Java: use `TAB` to do omni-completion.
-* HTML/XML: End tags are automatically completed after typing a begin tag. (Typing > twice pushes the end tag to a new line.)
-
-Other good references
----------------------
-
-* http://amix.dk/vim/vimrc.html
-* http://spf13.com/post/perfect-vimrc-vim-config-file
-
-
-Vim Visual Cheat Sheet
-----------------------
-
-I've compiled and plotted a Vim Cheat Sheet for beginners. 
-Welcome to download and learn Vim with it.
-
-![My Vim Visual Cheat Sheet](http://people.csail.mit.edu/vgod/vim/vim-cheat-sheet-en.png "My Vim Visual Cheat Sheet")
-
-* [Vim Visual Cheat Sheet (PNG)](http://people.csail.mit.edu/vgod/vim/vim-cheat-sheet-en.png)
-* [Vim Visual Cheat Sheet (PDF)](http://people.csail.mit.edu/vgod/vim/vim-cheat-sheet-en.pdf)
-* [Vim入門圖解 Chinese Ver. (PNG)](http://blog.vgod.tw/wp-content/uploads/2009/12/vim-cheat-sheet-full.png)
-* [Vim入門圖解 Chinese Ver. (PDF)](http://blog.vgod.tw/wp-content/uploads/2009/12/vgod-vim-cheat-sheet-full.pdf)
-
-These Vim Visual Cheat Sheets are released under [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/deed.en_US).
-
 
 License
 -------
