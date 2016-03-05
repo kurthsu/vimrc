@@ -1,12 +1,9 @@
-" vgod's vimrc
-" Tsung-Hsiang (Sean) Chang <vgod@vgod.tw>
-" Fork me on GITHUB  https://github.com/vgod/vimrc
-
-" read https://github.com/vgod/vimrc/blob/master/README.md for more info
-
+" Kurt's vimrc
+" Kurt Hsu <kurt.hsu@gmail.com>
+" Forked from vgod's vimrc https://github.com/vgod/vimrc
+" read https://github.com/kurthsu/vimrc/blob/master/README.md for more info
 
 " For pathogen.vim: auto load all plugins in .vim/bundle
-
 let g:pathogen_disabled = []
 if !has('gui_running')
    call add(g:pathogen_disabled, 'powerline')
@@ -15,14 +12,14 @@ endif
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" General Settings
+" ================== General Settings ====================
 
-set nocompatible	" not compatible with the old-fashion vi mode
-set bs=2		" allow backspacing over everything in insert mode
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set autoread		" auto read when file is changed from outside
-
+set nocompatible      " not compatible with the old-fashion vi mode
+set bs=2              " allow backspacing over everything in insert mode
+set history=50        " keep 50 lines of command line history
+set ruler             " show the cursor position all the time
+set autoread          " auto read when file is changed from outside
+set nu                " Enable line number
 
 filetype off          " necessary to make ftdetect work on Linux
 syntax on
@@ -30,10 +27,8 @@ filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
-
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
-
 
 syntax on		" syntax highlight
 set hlsearch		" search highlighting
@@ -47,11 +42,11 @@ if has("gui_running")	" GUI color and font settings
   highlight CursorLine          guibg=#003853 ctermbg=24  gui=none cterm=none
 else
 " terminal color settings
-  colors vgod
+  colors wombat256
 endif
 
 set clipboard=unnamed	" yank to the system register (*) by default
-set showmatch		" Cursor shows matching ) and }
+set showmatch		" Cursor shows matching ) and }G3
 set showmode		" Show current mode
 set wildchar=<TAB>	" start wild expansion in the command line using <TAB>
 set wildmenu            " wild char completion menu
@@ -70,23 +65,40 @@ set smarttab		" insert tabs on the start of a line according to context
 " disable sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
+set vb t_vb=
 set tm=500
 
-" TAB setting{
+" TAB setting {
    set expandtab        "replace <TAB> with spaces
-   set softtabstop=3 
-   set shiftwidth=3 
+   set tabstop=4
+   set shiftwidth=4
 
    au FileType Makefile set noexpandtab
-"}      							
+"}
 
-" status line {
+set list listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+hi NonText ctermfg=8 guifg=gray
+
+" status line
 set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \ 
-set statusline+=\ \ \ [%{&ff}/%Y] 
+set statusline=%{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \ 
+set statusline+=%2*[%n%H%M%R%W]%*\        " flags and buf no
 set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\ 
-set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
+set statusline+=%=%-8.(%l,%c%V%)\ %p%%/%L
+
+" mouse settings
+set mouse=nicr                  " mouse support
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
+if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+endif
+
+" Hide toolbar and scrollbars in MacVim
+set guioptions-=T
+set guioptions-=L
+set guioptions-=r
 
 function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "")
@@ -103,9 +115,8 @@ endfunction
 
 "}
 
-
 " C/C++ specific settings
-autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
+autocmd FileType c,cpp,cc  set cindent comments=sr:/*,mb:*,el:*/,:// c.,.,ino=>s,e0,n0,f0,{9/0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
 
 "Restore cursor to file position in previous editing session
 set viminfo='10,\"100,:20,%,n~/.viminfo
@@ -140,23 +151,44 @@ map <leader>[ :cp<CR>
 
 " --- move around splits {
 " move to and maximize the below split 
-map <C-J> <C-W>j<C-W>_
+map <C-J> <C-W>j
 " move to and maximize the above split 
-map <C-K> <C-W>k<C-W>_
+map <C-K> <C-W>k
 " move to and maximize the left split 
-nmap <c-h> <c-w>h<c-w><bar>
+nmap <c-l> <c-w>l
 " move to and maximize the right split  
-nmap <c-l> <c-w>l<c-w><bar>
+nmap <c-h> <c-w>h
 set wmw=0                     " set the min width of a window to 0 so we can maximize others 
 set wmh=0                     " set the min height of a window to 0 so we can maximize others
 " }
 
-" move around tabs. conflict with the original screen top/bottom
-" comment them out if you want the original H/L
-" go to prev tab 
-map <S-H> gT
-" go to next tab
-map <S-L> gt
+" function keys mapping
+map <F5> :TComment<cr>  " comment lines with cmd+/
+vmap <F5> :TComment<cr>gv
+nmap <F8> :TagbarToggle<CR> " --- tagbar
+map <F9> :NERDTreeToggle<CR> " open sidebar with cmd+k
+
+" folding
+set foldenable
+set foldmethod=indent
+set foldnestmax=2
+nnoremap <space> za
+vnoremap <space> zf
+
+" tab management
+nmap t1 1gt
+nmap t2 2gt
+nmap t3 3gt
+nmap t4 4gt
+nmap t5 5gt
+nmap t6 6gt
+nmap t7 7gt
+nmap t8 8gt
+nmap t9 9gt
+nmap tn :tabn<CR>
+nmap tp :tabp<CR>
+nmap tt :tabnew<CR>
+nmap tw :tabclose<CR>
 
 " new tab
 map <C-t><C-t> :tabnew<CR>
@@ -203,8 +235,8 @@ cmap cd. lcd %:p:h
 " PROGRAMMING SHORTCUTS
 "--------------------------------------------------------------------------- 
 
-" Ctrl-[ jump out of the tag stack (undo Ctrl-])
-map <C-[> <ESC>:po<CR>
+" [[ jump out of the tag stack (undo Ctrl-])
+map [[ :po<CR>
 
 " ,g generates the header guard
 map <leader>g :call IncludeGuard()<CR>
@@ -271,37 +303,13 @@ endfun
 " PLUGIN SETTINGS
 "--------------------------------------------------------------------------- 
 
+" --- Syntastic
+let g:statline_syntastic = 0
 
-" ------- vim-latex - many latex shortcuts and snippets {
-
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
-set grepprg=grep\ -nH\ $*
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-"}
-
-
-" --- AutoClose - Inserts matching bracket, paren, brace or quote 
-" fixed the arrow key problems caused by AutoClose
-if !has("gui_running")	
-   set term=linux
-   imap OA <ESC>ki
-   imap OB <ESC>ji
-   imap OC <ESC>li
-   imap OD <ESC>hi
-
-   nmap OA k
-   nmap OB j
-   nmap OC l
-   nmap OD h
-endif
-
-
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " --- Command-T
 let g:CommandTMaxHeight = 15
@@ -311,12 +319,10 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
-
 " --- EasyMotion
 "let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
-
 
 " --- TagBar
 " toggle TagBar with F7
@@ -324,19 +330,13 @@ nnoremap <silent> <F7> :TagbarToggle<CR>
 " set focus to TagBar when opening it
 let g:tagbar_autofocus = 1
 
-" --- PowerLine
-" let g:Powerline_symbols = 'fancy' " require fontpatcher
-"
-
 " --- SnipMate
 let g:snipMateAllowMatchingDot = 0
 
-" --- coffee-script
-au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw! " recompile coffee scripts on write
-
 " --- vim-gitgutter
 let g:gitgutter_enabled = 1
+highlight clear SignColumn " For the same appearance as your line number column
 
-" set ejs filetype to html
-au BufNewFile,BufRead *.ejs set filetype=html
-
+" --- ctrlp
+let g:ctrlp_dont_split = 'NERD_tree_2'
+let g:ctrlp_show_hidden = 1
