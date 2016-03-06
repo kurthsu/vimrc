@@ -148,6 +148,14 @@ Utility
 
 * [Ctrlp](https://github.com/ctrlpvim/ctrlp.vim): Fuzzy finder. <leader>f to search. Ctrl + x (sp), Ctrl + v (vsp), Ctrl + t (tab)
 
+* [ag.vim](https://github.com/rking/ag.vim): Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module / CLI script 'ack'
+
+  * `:Ag [options] {pattern} [{directory}]`: Search recursively in {directory} (which defaults to the current directory) for the {pattern}.
+
+* [gruvbox](https://github.com/morhetz/gruvbox): Retro groove color scheme for Vim
+
+  * `set background=dark | light`
+
 C/C++ Support
 
 * [OmniCppComplete](http://www.vim.org/scripts/script.php?script_id=1520): C/C++ omni-completion with ctags database.
