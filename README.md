@@ -1,4 +1,4 @@
-kurt's vimrc
+Kurt's vimrc
 ============
 Author: Kurt Hsu (kurt.hsu@gmail.com)
 
@@ -23,7 +23,7 @@ MANUALLY INSTALL
 
         git clone git://github.com/kurthsu/vimrc.git ~/.vim
         cd ~/.vim
-        git submodule update --init
+        git submodule update --init --recursive
 
 2. Install ~/.vimrc and ~/.gvimrc
 
@@ -50,7 +50,6 @@ MANUALLY INSTALL ON WINDOWS
         source $VIM/vimfiles/vimrc
 
 
-  
 INSTALL & UPGRADE PLUGIN BUNDLES
 --------------------------------
 
@@ -154,7 +153,7 @@ Utility
 
 * [gruvbox](https://github.com/morhetz/gruvbox): Retro groove color scheme for Vim
 
-  * `set background=dark | light`
+  * `:set background=dark | light`
 
 C/C++ Support
 
@@ -175,6 +174,32 @@ JavaScript Support
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe): A fast, as-you-type, fuzzy-search code completion engine for Vim.
 
 * [TernForVim](https://github.com/ternjs/tern_for_vim): Provide Tern-based JavaScript editing support.
+
+Golang Support
+
+* [vim-go](https://github.com/fatih/vim-go): Go development plugin for Vim
+
+  * `:GoDef` - Go to symbol/declaration
+  * `:GoDoc` - Look up documentation with :GoDoc inside Vim or open it in browser
+  * `:GoBuild/Install/Test` - Compile your package with :GoBuild, install it with :GoInstall or test them with :GoTest (also supports running single tests via :GoTestFunc)
+  * `:GoRun` - Quickly execute your current file/files with :GoRun
+  * `:GoPath` - Change or display GOPATH with :GoPath
+  * `:GoCoverage` - Create a coverage profile and display annotated source code in browser to see which functions are covered with :GoCoverage
+
+* [gocode](in YouCompleteMe)(https://github.com/nsf/gocode): An autocompletion daemon for the Go programming language
+
+* [gotag](https://github.com/jstemmer/gotags): ctags-compatible tag generator for Go
+
+```
+    gotags [options] file(s)
+    -L="": source file names are read from the specified file. If file is "-", input is read from standard in.
+    -R=false: recurse into directories in the file list.
+    -f="": write output to specified file. If file is "-", output is written to standard out.
+    -silent=false: do not produce any output on error.
+    -sort=true: sort tags.
+    -tag-relative=false: file paths should be relative to the directory containing the tag file.
+    -v=false: print version.
+```
 
 Git
 
