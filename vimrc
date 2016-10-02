@@ -12,7 +12,9 @@ endif
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" ================== General Settings ====================
+"---------------------------------------------------------------------------
+" General Settings
+"---------------------------------------------------------------------------
 
 set nocompatible      " not compatible with the old-fashion vi mode
 set bs=2              " allow backspacing over everything in insert mode
@@ -121,8 +123,8 @@ endfun
 " USEFUL SHORTCUTS
 "---------------------------------------------------------------------------
 " set leader to ,
-let mapleader=","
-let g:mapleader=","
+" let mapleader=","
+" let g:mapleader=","
 
 "replace the current word in all opened buffers
 map <leader>r :call Replace()<CR>
@@ -299,16 +301,13 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 
-" --- Command-T
-let g:CommandTMaxHeight = 15
-
 " --- SuperTab
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
 " --- EasyMotion
-"let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
+let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 
@@ -328,6 +327,27 @@ highlight clear SignColumn " For the same appearance as your line number column
 " --- ctrlp
 let g:ctrlp_dont_split = 'NERD_tree_2'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_map = '<leader>g'
+let g:ctrlp_cmd = 'ctrlp'
+map <leader>f :CtrlPMRU<CR>
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$'
+    \}
+let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+" Ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+let g:ctrlp_extensions = ['funky']
 
 " --- airline
 let g:airline#extensions#tabline#enabled = 0
